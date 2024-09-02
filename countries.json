@@ -90,7 +90,7 @@
       "{address1}",
       "{address2}",
       "{address3}",
-      "{postalcode} {state}, {city}",
+      "{city}, {state} {postalcode}",
       "{country}"
     ]
   }

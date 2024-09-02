@@ -68,6 +68,7 @@ def format_address(address, countries, country):
     :return: array of strings with the formatted address, or None if nothing is left.
     """
 
+    # print("addr", address)
     rows = [address["name"]]
 
     if address['country']:
@@ -125,7 +126,7 @@ def get_name(header, row):
     :return: the full name of the person to print.
     """
 
-    name = get_field(header, row, "fullname")
+    name = get_field(header, row, "name")
 
     if not name:
         # combine first and last name
@@ -138,13 +139,13 @@ def get_name(header, row):
 
 def get_address(header, row):
     return {
-        "name": get_name(header, row),
-        "address1": get_field(header, row, "address1"),
+        "name": get_field(header, row, "name"),
+        "address1": get_field(header, row, "Address"),
         "address2": get_field(header, row, "address2"),
         "address3": get_field(header, row, "address3"),
-        "postalcode": get_field(header, row, "postalcode"),
-        "city": get_field(header, row, "city"),
-        "state": get_field(header, row, "state"),
+        "postalcode": get_field(header, row, "Postal Code"),
+        "city": get_field(header, row, "City"),
+        "state": get_field(header, row, "State"),
         "country": get_field(header, row, "country"),
     }
 
@@ -152,7 +153,7 @@ def get_address(header, row):
 def load_label(filename, brand, number):
     header = None
     with open(filename, newline='') as tsvfile:
-        reader = csv.reader(tsvfile, delimiter='\t', quotechar='"')
+        reader = csv.reader(tsvfile, delimiter=',', quotechar='"')
         for row in reader:
             if not header:
                 header = row
@@ -192,7 +193,7 @@ def main():
                         help='draw a box around the label')
     parser.add_argument('--font', '-f', type=str, nargs='?', default="Times-Roman",
                         help='font to use for label ("Times-Roman")')
-    parser.add_argument('--input', '-i', type=str, nargs='?', default="address.tsv",
+    parser.add_argument('--input', '-i', type=str, nargs='?', default="address.csv",
                         help='tsv file with addresses (address.tsv)')
     parser.add_argument('--labels', '-l', type=str, nargs='?', default="labels.tsv",
                         help='file with label definitions (labels.tsv)')
@@ -239,11 +240,13 @@ def main():
 
     # load tsv file and print each label
     with open(args.input, newline='') as tsvfile:
-        reader = csv.reader(tsvfile, delimiter='\t', quotechar='"')
+        reader = csv.reader(tsvfile, delimiter=',', quotechar='"')
         count = 0
         header = None
         total = 0
         for row in reader:
+            if row[10] == 'TRUE' or row[11] == '1':
+                continue
             if not header:
                 header = []
                 for s in row:
@@ -251,6 +254,7 @@ def main():
                     header.append(tsv_mappings.get(s, s))
                 continue
 
+            # print('header', header, row)
             address = get_address(header, row)
             if address:
                 address = format_address(address, countries, args.country)

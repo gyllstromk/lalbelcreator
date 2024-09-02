@@ -1,12 +1,12 @@
 {
     "firstname": "firstname",
     "lastname": "lastname",
-    "displayname": "fullname",
-    "address": "address1",
+    "displayname": "Name",
+    "address": "Address",
     "address2": "address2",
     "address3": "address3",
-    "city": "city",
-    "state": "state",
-    "postalcode": "postalcode",
+    "city": "City",
+    "state": "State",
+    "postalcode": "Postal Code",
     "country": "country"
 }
