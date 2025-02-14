@@ -1,5 +1,19 @@
-env: bin/
-	python3 -m venv .
+VENV := .venv
+REQS := requirements.txt
+PYTHON := $(VENV)/bin/python
+PIP := $(VENV)/bin/pip
 
-install:
-	pip3 install -r requirements.txt
+# Default target: run the script
+run: $(PYTHON) main.py
+	$(PYTHON) main.py
+
+# Ensure virtual environment and install dependencies if needed
+$(PYTHON): $(REQS)
+	python3 -m venv $(VENV)
+	$(PIP) install --upgrade pip
+	$(PIP) install -r $(REQS)
+
+# Clean up the virtual environment
+clean:
+	rm -rf $(VENV)
+.venv
