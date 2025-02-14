@@ -2,9 +2,12 @@ VENV := .venv
 REQS := requirements.txt
 PYTHON := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
+OUTPUT := labels.pdf
+ADDRESS := address.csv
+MAIN := main.py
 
 # Default target: run the script
-run: $(PYTHON) main.py
+$(OUTPUT): $(PYTHON) $(MAIN) $(ADDRESS)
 	$(PYTHON) main.py
 
 # Ensure virtual environment and install dependencies if needed
@@ -16,4 +19,6 @@ $(PYTHON): $(REQS)
 # Clean up the virtual environment
 clean:
 	rm -rf $(VENV)
-.venv
+
+read: $(OUTPUT)
+	open $(OUTPUT)
