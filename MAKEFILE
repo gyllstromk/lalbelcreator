@@ -5,9 +5,10 @@ PIP := $(VENV)/bin/pip
 OUTPUT := labels.pdf
 ADDRESS := address.csv
 MAIN := main.py
+MAPPINGS := mappings.json
 
 # Default target: run the script
-$(OUTPUT): $(PYTHON) $(MAIN) $(ADDRESS)
+$(OUTPUT): $(PYTHON) $(MAIN) $(ADDRESS) $(MAPPINGS)
 	$(PYTHON) main.py
 
 # Ensure virtual environment and install dependencies if needed

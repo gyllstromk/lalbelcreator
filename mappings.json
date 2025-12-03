@@ -1,7 +1,8 @@
 {
     "firstname": "firstname",
     "lastname": "lastname",
-    "displayname": "Name",
+    "displayname": "name",
+    "envelopename": "name",
     "address": "Address",
     "address2": "address2",
     "address3": "address3",
